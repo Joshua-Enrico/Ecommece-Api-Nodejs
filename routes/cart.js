@@ -2,7 +2,7 @@ const router = require('express').Router();
 const {  verifyToken } = require('./verifyToken');
 const Cart = require('../models/Cart');
 
-// CREATE PRODUCT
+// CREATE CART
 router.post("/", verifyToken, async (req, res) => {
     const newCart = new Cart(req.body);
 
