@@ -26,7 +26,7 @@ router.put("/deactivate/:id", verifyTokenAndAdmin, async (req, res) => {
     try {
         const deactivatedUser = await User.findByIdAndUpdate(req.params.id, {
             isActive: false,
-        }, {new: true});
+        }, { new: true });
         return res.status(200).json("User deactivated");
     } catch (err) {
         return res.status(500).send(err);
@@ -38,7 +38,7 @@ router.put("/activate/:id", verifyTokenAndAdmin, async (req, res) => {
     try {
         const activateUser = await User.findByIdAndUpdate(req.params.id, {
             isActive: true,
-        }, {new: true});
+        }, { new: true });
         return res.status(200).json("User activated");
     } catch (err) {
         return res.status(500).send(err);
@@ -66,6 +66,44 @@ router.get("/find/:id", verifyTokenAndAdmin, async (req, res) => {
     }
 })
 
+// Get all users
+router.get("/", verifyTokenAndAdmin, async (req, res) => {
+    const query = req.query.new
+    try {
+        const user = query ? await User.find().sort({ _id: -1 }).limit(5) : await User.find();
+        return res.status(200).json(user)
+    } catch (err) {
+        return res.status(500).send(err);
+    }
+})
+
+// Get User Stats
+
+router.get("/stats", verifyTokenAndAdmin, async (req, res) => {
+    const date = new Date();
+    const lastyear = new Date(date.setFullYear(date.getFullYear() - 1));
+
+    try {
+        const data = await User.aggregate([
+            { $match: { createdAt: { $gte: lastyear } } },
+            {
+                $project: {
+                    month: { $month: "$createdAt" },
+
+                },
+            },
+            {
+                $group: {
+                    _id: "$month",
+                    count: { $sum: 1 }
+                }
+            }
+        ]);
+        return res.status(200).json(data)
+    } catch (err) {
+        return res.status(500).send(err);
+    }
+})
 
 
 module.exports = router;
