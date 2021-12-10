@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --watch server --inspect  index.js",
-    "build": "NODE_ENV=production node index.js"
+    "start": "nodemon --watch server --inspect  index.js"
   },
   "keywords": [],
   "author": "",
