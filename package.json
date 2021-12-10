@@ -4,14 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --watch server --inspect  index.js"
-},
-  "builds": [
-    { "src": "script.js", "use": "@vercel/node" }
-  ],
-  "routes": [
-    { "src": "/(.*)", "dest": "/index.js" }
-  ],
+    "start": "nodemon --watch server --inspect  index.js",
+    "build": "NODE_ENV=production node index.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
