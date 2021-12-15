@@ -70,7 +70,7 @@ router.put("/deactivate/:id", verifyTokenAndAdmin, async (req, res) => {
 })
 
 // Get all products
-router.get("/", verifyTokenAndAdmin, async (req, res) => {
+router.get("/", async (req, res) => {
     const qNew = req.query.new
     const qCategory = req.query.category
     try {
