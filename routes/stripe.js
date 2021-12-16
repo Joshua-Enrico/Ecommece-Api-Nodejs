@@ -1,15 +1,17 @@
 const router = require('express').Router();
-const stripe = require('stripe')(process.env.STRIPE_KEY);
 
+router.post('/payment', (req, res) => {
+    const KEY = process.env.STRIPE_KEY
+    const Stripe = require('stripe');
+    const stripe = new Stripe(KEY);
 
-router.post('/', (req, res) => {
     stripe.charges.create({
-        source:req.body.id,
+        source:req.body.tokenId,
         amount:req.body.amount,
         currency:'usd'
     }, (stripeErr, stripeRes) => {
         if(stripeErr){
-            res.status(500).send({error:stripeErr});
+            res.status(500).send(stripeErr);
         } else {
             res.status(200).send({success:stripeRes});
         }

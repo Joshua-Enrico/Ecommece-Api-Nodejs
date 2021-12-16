@@ -9,7 +9,7 @@ const productRoute = require('./routes/product');
 const cartRoute = require('./routes/cart');
 const orderRoute = require('./routes/order');
 const slideRoute = require('./routes/slides');
-
+const paymentRoute = require('./routes/stripe');
 
 dotenv.config();
 
@@ -29,6 +29,7 @@ app.use("/api/products", productRoute);
 app.use("/api/carts", cartRoute);
 app.use("/api/orders", orderRoute);
 app.use("/api/slides", slideRoute);
+app.use("/api/checkout", paymentRoute);
 app.use(express.static('public'));
 
 // Auth Routes ends here
