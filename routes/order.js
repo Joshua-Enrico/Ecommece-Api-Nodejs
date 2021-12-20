@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { verifyTokenAndAuth, verifyToken, verifyTokenAndAdmin } = require('./verifyToken');
 const Order = require('../models/Order');
 
-router.post("/", verifyTokenAndAdmin, async (req, res) => {
+router.post("/", verifyToken, async (req, res) => {
     const newOrder = new Order(req.body);
 
     try {
